@@ -1,0 +1,51 @@
+# IDE and test files
+.vscode/**
+.vscode-test/**
+.git/**
+.gitignore
+.yarnrc
+
+# Source files (only ship compiled dist/)
+src/**
+**/*.ts
+**/*.map
+
+# Build configuration
+webpack.config.js
+.eslintrc.json
+tsconfig.json
+
+# Dependencies
+node_modules/**
+
+# Development and build artifacts
+out/**
+*.vsix
+.DS_Store
+
+# Development documentation (internal use only)
+archive/**
+*.backup
+*Integration.txt
+*_GUIDE.md
+*_ISSUE.md
+*_COMPLETE.md
+*_SEC-*.md
+*_REPORT.md
+*_INSTRUCTIONS.md
+test_*.md
+.claude/**
+
+# Marketplace asset placeholders
+images/marketplace/PLACEHOLDER_*.md
+images/marketplace/PLACEHOLDER_*.png
+
+# Keep essential documentation
+!README.md
+!CHANGELOG.md
+!LICENSE
+!SECURITY.md
+!docs/PROVIDERS.md
+
+# Keep essential assets
+!images/icon.png

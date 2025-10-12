@@ -1,0 +1,24 @@
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
+.DS_Store
+
+# Development files
+*.backup
+*Integration.txt
+*_GUIDE.md
+*_ISSUE.md
+*_COMPLETE.md
+*_SEC-*.md
+*_REPORT.md
+*_INSTRUCTIONS.md
+test_*.md
+archive/
+archive
+
+# Personal workspace files (keep private)
+.claude/
+.claude.md
+.vscode/

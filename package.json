@@ -1,0 +1,372 @@
+{
+  "name": "gitmsgai",
+  "displayName": "GitMsgAI",
+  "description": "AI-powered commit messages with 5 providers, 400+ models, free local AI support, smart caching, and enterprise security. The only commit tool you need.",
+  "version": "0.0.4",
+  "publisher": "ChaseRich",
+  "author": {
+    "name": "ChaseRich"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChaseRichGit/gitmsgai"
+  },
+  "bugs": {
+    "url": "https://github.com/ChaseRichGit/gitmsgai/issues"
+  },
+  "homepage": "https://chaserich.com",
+  "qna": "https://github.com/ChaseRichGit/gitmsgai/discussions",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#C80000",
+    "theme": "dark"
+  },
+  "keywords": [
+    "git",
+    "commit",
+    "ai",
+    "artificial intelligence",
+    "commit message",
+    "conventional commits",
+    "source control",
+    "scm",
+    "automation",
+    "copilot",
+    "openrouter",
+    "openai",
+    "gpt",
+    "claude",
+    "anthropic",
+    "gemini",
+    "google",
+    "ollama",
+    "local ai",
+    "productivity"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "SCM Providers"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitmsgai.generateCommitMessage",
+        "title": "Generate Commit Message",
+        "icon": "$(hubot)"
+      },
+      {
+        "command": "gitmsgai.selectProvider",
+        "title": "GitMsgAI: Select Provider",
+        "icon": "$(cloud)"
+      },
+      {
+        "command": "gitmsgai.setApiKey",
+        "title": "GitMsgAI: Set API Key"
+      },
+      {
+        "command": "gitmsgai.testConnection",
+        "title": "GitMsgAI: Test Provider Connection",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "gitmsgai.clearCache",
+        "title": "GitMsgAI: Clear Cache"
+      },
+      {
+        "command": "gitmsgai.selectModel",
+        "title": "GitMsgAI: Select Model",
+        "icon": "$(settings-gear)"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "GitMsgAI",
+        "order": 0,
+        "properties": {
+          "gitmsgai.provider": {
+            "type": "string",
+            "enum": ["openrouter", "openai", "google", "claude", "local"],
+            "default": "openrouter",
+            "order": 0,
+            "markdownDescription": "**AI provider to use for generating commit messages**",
+            "enumDescriptions": [
+              "OpenRouter - Access 400+ models from multiple providers with unified API",
+              "OpenAI - Official OpenAI API (GPT-4, GPT-3.5, etc.) or Azure OpenAI",
+              "Google - Google AI Studio API (Gemini models)",
+              "Claude - Anthropic Claude API (Claude 3.5 Sonnet, etc.)",
+              "Local - Local AI models (Ollama, LM Studio, etc.)"
+            ]
+          },
+          "gitmsgai.timeout": {
+            "type": "number",
+            "default": 30,
+            "order": 1,
+            "markdownDescription": "**Timeout** in seconds for API requests"
+          },
+          "gitmsgai.rateLimitPerMinute": {
+            "type": "number",
+            "default": 10,
+            "order": 2,
+            "markdownDescription": "**Rate limit:** Maximum number of API requests allowed per minute"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Conventional Commits",
+        "order": 10,
+        "properties": {
+          "gitmsgai.conventionalCommits.enabled": {
+            "type": "boolean",
+            "default": false,
+            "order": 0,
+            "markdownDescription": "**Enable conventional commits** format (e.g., `feat:`, `fix:`). When enabled, generates very short, structured messages. When disabled, generates verbose, detailed messages with full context."
+          },
+          "gitmsgai.reviewBeforeApply": {
+            "type": "boolean",
+            "default": false,
+            "order": 1,
+            "markdownDescription": "**Review and approve** commit messages before applying them to the commit input box"
+          },
+          "gitmsgai.showConsentWarning": {
+            "type": "boolean",
+            "default": false,
+            "order": 2,
+            "markdownDescription": "**Show consent warning** about sending code changes to external service"
+          },
+          "gitmsgai.conventionalCommits.types": {
+            "type": "array",
+            "default": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
+            "items": {
+              "type": "string"
+            },
+            "order": 3,
+            "markdownDescription": "**Allowed types:** Valid commit types (feat, fix, docs, etc.)"
+          },
+          "gitmsgai.conventionalCommits.scopes": {
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "order": 4,
+            "markdownDescription": "**Allowed scopes:** Valid scopes (empty = allow any)"
+          },
+          "gitmsgai.conventionalCommits.enableScopeDetection": {
+            "type": "boolean",
+            "default": true,
+            "order": 5,
+            "markdownDescription": "**Auto-detect scope** from changed file paths"
+          },
+          "gitmsgai.conventionalCommits.requireScope": {
+            "type": "boolean",
+            "default": false,
+            "order": 6,
+            "markdownDescription": "**Require scope** in all commit messages"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Prompt Template",
+        "order": 20,
+        "properties": {
+          "gitmsgai.prompt": {
+            "type": "string",
+            "default": "You are a Git commit message generator. Analyze ONLY the actual code changes provided below.\n\n**CRITICAL RULES:**\n1. ONLY analyze the changes shown in the diff below\n2. NEVER make up or assume changes that aren't in the diff\n3. If the diff is empty or you cannot see changes, output: ERROR: No changes detected\n4. Base your message ONLY on what you can see in the diff\n\n**Changes:**\n{changes}\n\n**Generate a DETAILED commit message following this format:**\n\n<type>(<scope>): <subject>\n\n<body>\n\n**Format Guidelines:**\n- Types: feat, fix, docs, style, refactor, test, chore\n- Subject: One-line summary (50-72 chars max)\n- Body: REQUIRED for multiple files or significant changes\n  * List major changes as bullet points\n  * Group related changes together\n  * Be specific about what changed in each area\n  * Use present tense (\"add\" not \"added\")\n\n**Rules:**\n1. If 5+ files changed, ALWAYS include a detailed body\n2. Group changes by category (security, docs, features, fixes)\n3. List key files or modules that changed\n4. Explain WHY for breaking changes\n5. Add '!' after type for BREAKING CHANGES\n\n**Example for multiple files:**\nfeat(security)!: implement comprehensive security enhancements\n\nSecurity improvements:\n- Add SecretStorage API for encrypted key storage\n- Implement rate limiting with sliding window algorithm\n- Add input validation and error sanitization\n- Filter sensitive files from diffs (.env, *.key, etc.)\n\nFeatures added:\n- Local caching of commit suggestions\n- Review mode with edit/regenerate options\n- Request timeout and cancellation support\n- Enhanced conventional commits validation\n\nDocumentation:\n- Add comprehensive README with security guide\n- Create SECURITY.md with best practices\n- Add CHANGELOG following Keep a Changelog format\n\nBREAKING CHANGE: API key now requires SecretStorage setup\n\n**Output ONLY the commit message. If you cannot see changes, output ERROR.**",
+            "markdownDescription": "**Custom prompt template** for generating commit messages. Use `{changes}` as a placeholder for the git diff.",
+            "editPresentation": "multilineText"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Provider: OpenRouter",
+        "order": 21,
+        "properties": {
+          "gitmsgai.openrouter.model": {
+            "type": "string",
+            "default": "google/gemini-2.0-flash-exp:free",
+            "markdownDescription": "**Model:** Use 'GitMsgAI: Select Model' to browse 400+ available models"
+          },
+          "gitmsgai.openrouter.baseUrl": {
+            "type": "string",
+            "default": "https://openrouter.ai/api/v1",
+            "markdownDescription": "**API base URL** (usually no need to change)"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Provider: OpenAI",
+        "order": 22,
+        "properties": {
+          "gitmsgai.openai.model": {
+            "type": "string",
+            "default": "gpt-5-nano",
+            "markdownDescription": "**Model:** Use 'GitMsgAI: Select Model' to see available models"
+          },
+          "gitmsgai.openai.baseUrl": {
+            "type": "string",
+            "default": "https://api.openai.com/v1",
+            "markdownDescription": "**API base URL** (change for Azure OpenAI or custom endpoints)"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Provider: Google",
+        "order": 23,
+        "properties": {
+          "gitmsgai.google.model": {
+            "type": "string",
+            "default": "gemini-2.5-flash-lite-preview-09-2025",
+            "markdownDescription": "**Model:** Use 'GitMsgAI: Select Model' to see available Gemini models"
+          },
+          "gitmsgai.google.baseUrl": {
+            "type": "string",
+            "default": "https://generativelanguage.googleapis.com/v1beta",
+            "markdownDescription": "**API base URL** (usually no need to change)"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Provider: Claude",
+        "order": 24,
+        "properties": {
+          "gitmsgai.claude.model": {
+            "type": "string",
+            "default": "claude-sonnet-4-5-20250929",
+            "markdownDescription": "**Model:** Use 'GitMsgAI: Select Model' to see available models"
+          },
+          "gitmsgai.claude.baseUrl": {
+            "type": "string",
+            "default": "https://api.anthropic.com/v1",
+            "markdownDescription": "**API base URL** (usually no need to change)"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Provider: Local (Ollama/LM Studio)",
+        "order": 25,
+        "properties": {
+          "gitmsgai.local.model": {
+            "type": "string",
+            "default": "openai/gpt-oss-20b",
+            "markdownDescription": "**Model name:** Ollama: `qwen2.5-coder:latest`, LM Studio: `openai/gpt-oss-20b`"
+          },
+          "gitmsgai.local.baseUrl": {
+            "type": "string",
+            "default": "http://localhost:11434/v1",
+            "markdownDescription": "**Server URL:** Ollama: `http://localhost:11434/v1`, LM Studio: `http://localhost:1234/v1`"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Cache & Performance",
+        "order": 30,
+        "properties": {
+          "gitmsgai.enableCache": {
+            "type": "boolean",
+            "default": false,
+            "order": 0,
+            "markdownDescription": "**Enable caching** of commit message suggestions"
+          },
+          "gitmsgai.cacheSize": {
+            "type": "number",
+            "default": 10,
+            "order": 1,
+            "markdownDescription": "**Cache size:** Maximum number of suggestions to cache"
+          },
+          "gitmsgai.autoUpdateModels": {
+            "type": "boolean",
+            "default": true,
+            "order": 2,
+            "markdownDescription": "**Auto-update models** list from provider APIs"
+          },
+          "gitmsgai.modelsUpdateInterval": {
+            "type": "number",
+            "default": 24,
+            "order": 3,
+            "markdownDescription": "**Update interval:** How often to refresh models list (hours)"
+          }
+        }
+      },
+      {
+        "title": "GitMsgAI › Security & Privacy",
+        "order": 40,
+        "properties": {
+          "gitmsgai.excludePatterns": {
+            "type": "array",
+            "default": [
+              ".env*",
+              "*.key",
+              "*.pem",
+              "*.p12",
+              "*.pfx",
+              "credentials.json",
+              "secrets.*",
+              "*.secret",
+              "**/secrets/**"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "order": 0,
+            "markdownDescription": "**Exclude patterns:** Glob patterns for sensitive files to exclude from diffs"
+          },
+          "gitmsgai.warnOnSensitiveFiles": {
+            "type": "boolean",
+            "default": true,
+            "order": 1,
+            "markdownDescription": "**Warn on exclusions:** Show notification when sensitive files are excluded"
+          }
+        }
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "when": "scmProvider == git",
+          "command": "gitmsgai.generateCommitMessage",
+          "group": "navigation",
+          "icon": "$(hubot)"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/minimatch": "^5.1.2",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.56.0",
+    "glob": "^10.3.10",
+    "minimatch": "^10.0.3",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}
