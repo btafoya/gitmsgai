@@ -2,7 +2,7 @@
   "name": "gitmsgai",
   "displayName": "GitMsgAI",
   "description": "AI-powered commit messages with 5 providers, 400+ models, free local AI support, smart caching, and enterprise security. The only commit tool you need.",
-  "version": "0.0.4",
+  "version": "0.0.2",
   "publisher": "ChaseRich",
   "author": {
     "name": "ChaseRich"
