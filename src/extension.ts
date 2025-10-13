@@ -218,6 +218,51 @@ export function activate(context: vscode.ExtensionContext) {
                 outputChannel.appendLine(`Failed to get unstaged diff: ${e}`);
             }
 
+            // Handle brand new files (untracked files with status 7)
+            // For these files, repository.diff() returns nothing because there's no "before" state
+            // We need to generate a synthetic diff showing all content as additions
+            const allFileChanges = [...stagedChanges, ...workingTreeChanges];
+            const newFiles = allFileChanges.filter((change: any) => change.status === 7); // Status 7 = untracked/new file
+
+            if (newFiles.length > 0) {
+                outputChannel.appendLine(`Found ${newFiles.length} new/untracked files`);
+
+                for (const newFile of newFiles) {
+                    try {
+                        const filePath = newFile.uri.fsPath;
+                        const relativePath = vscode.workspace.asRelativePath(filePath);
+                        outputChannel.appendLine(`  - Reading new file: ${relativePath}`);
+
+                        // Read the file content
+                        const fileContent = await vscode.workspace.fs.readFile(newFile.uri);
+                        const contentString = Buffer.from(fileContent).toString('utf8');
+
+                        // Generate a synthetic diff for the new file
+                        // Format matches standard git diff output
+                        const lines = contentString.split('\n');
+                        const syntheticDiff = [
+                            `diff --git a/${relativePath} b/${relativePath}`,
+                            `new file mode 100644`,
+                            `--- /dev/null`,
+                            `+++ b/${relativePath}`,
+                            `@@ -0,0 +1,${lines.length} @@`,
+                            ...lines.map(line => `+${line}`)
+                        ].join('\n');
+
+                        // Append to changes
+                        if (changes.length > 0) {
+                            changes += '\n\n' + syntheticDiff;
+                        } else {
+                            changes = syntheticDiff;
+                        }
+
+                        outputChannel.appendLine(`  ✓ Generated synthetic diff for ${relativePath}: ${syntheticDiff.length} characters`);
+                    } catch (fileError: any) {
+                        outputChannel.appendLine(`  ✗ Failed to read new file ${newFile.uri.fsPath}: ${fileError.message}`);
+                    }
+                }
+            }
+
             // Final check: do we have ANY diff content?
             if (!changes || changes.trim().length === 0) {
                 const totalChanges = stagedChanges.length + workingTreeChanges.length;

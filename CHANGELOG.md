@@ -5,6 +5,15 @@ All notable changes to the "GitMsgAI" extension will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **New File Support**: Extension now generates commit messages for brand new untracked files
+  - Automatically detects untracked files (status 7) that don't have diff output
+  - Generates synthetic diff format showing entire file content as additions
+  - Seamlessly integrates with existing diff processing for mixed changesets
+  - Works for both staged and unstaged new files
+
 ## [0.0.5] - 2025-10-12
 
 ### Changed
