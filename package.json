@@ -51,7 +51,8 @@
     "SCM Providers"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage:json",
+    "onCommand:gitmsgollama.generateCommitMessage"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -92,12 +93,12 @@
         "properties": {
           "gitmsgollama.provider": {
             "type": "string",
-            "enum": ["openrouter", "openai", "google", "claude", "local"],
-            "default": "openrouter",
+            "enum": ["local"],
+            "default": "local",
             "order": 0,
             "markdownDescription": "**AI provider to use for generating commit messages**",
             "enumDescriptions": [
-              "Local - Local AI models (Ollama, LM Studio, etc.)"
+              "Local - Local AI models (Ollama)"
             ]
           },
           "gitmsgollama.timeout": {
@@ -120,7 +121,7 @@
         "properties": {
           "gitmsgollama.conventionalCommits.enabled": {
             "type": "boolean",
-            "default": false,
+            "default": true,
             "order": 0,
             "markdownDescription": "**Enable conventional commits** format (e.g., `feat:`, `fix:`). When enabled, generates very short, structured messages. When disabled, generates verbose, detailed messages with full context."
           },

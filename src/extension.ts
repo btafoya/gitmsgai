@@ -395,29 +395,6 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            // If API key not found in SecretStorage, prompt user to set it (SEC-01, SEC-02, SEC-03)
-            /*
-            if (!apiKey) {
-                const action = await vscode.window.showErrorMessage(
-                    'OpenRouter API key is not set. Please configure your API key to use GitMsgOllama.',
-                    'Set API Key',
-                    'Cancel'
-                );
-
-                if (action === 'Set API Key') {
-                    await vscode.commands.executeCommand('gitmsgollama.setApiKey');
-                }
-                return;
-            }
-
-            // Validate API key (SEC-04)
-            const apiKeyValidation = validateApiKey(apiKey);
-            if (!apiKeyValidation.valid) {
-                vscode.window.showErrorMessage(apiKeyValidation.message || 'Invalid API key');
-                return;
-            }
-            */
-
             // Validate model (SEC-04)
             const modelValidation = validateModel(model, currentProvider);
             if (!modelValidation.valid) {
