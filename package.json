@@ -1,11 +1,11 @@
 {
   "name": "gitmsgollama",
   "displayName": "GitMsgOllama",
-  "description": "AI-powered commit messages with 5 providers, 400+ models, free local AI support, smart caching, and enterprise security. The only commit tool you need.",
-  "version": "0.0.6",
-  "publisher": "ChaseRich",
+  "description": "AI-powered commit messages with free local AI support, smart caching, and enterprise security. The only commit tool you need.",
+  "version": "0.1.1",
+  "publisher": "BrianTafoya",
   "author": {
-    "name": "ChaseRich"
+    "name": "BrianTafoya"
   },
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/btafoya/gitmsgollama/issues"
   },
-  "homepage": "https://chaserich.com",
+  "homepage": "https://github.com/btafoya/gitmsgollama",
   "qna": "https://github.com/btafoya/gitmsgollama/discussions",
   "license": "MIT",
   "icon": "images/icon.png",
@@ -97,10 +97,6 @@
             "order": 0,
             "markdownDescription": "**AI provider to use for generating commit messages**",
             "enumDescriptions": [
-              "OpenRouter - Access 400+ models from multiple providers with unified API",
-              "OpenAI - Official OpenAI API (GPT-4, GPT-3.5, etc.) or Azure OpenAI",
-              "Google - Google AI Studio API (Gemini models)",
-              "Claude - Anthropic Claude API (Claude 3.5 Sonnet, etc.)",
               "Local - Local AI models (Ollama, LM Studio, etc.)"
             ]
           },
@@ -181,70 +177,6 @@
             "default": "You are a Git commit message generator. Analyze ONLY the actual code changes provided below.\n\n**CRITICAL RULES:**\n1. ONLY analyze the changes shown in the diff below\n2. NEVER make up or assume changes that aren't in the diff\n3. If the diff is empty or you cannot see changes, output: ERROR: No changes detected\n4. Base your message ONLY on what you can see in the diff\n\n**Changes:**\n{changes}\n\n**Generate a DETAILED commit message following this format:**\n\n<type>(<scope>): <subject>\n\n<body>\n\n**Format Guidelines:**\n- Types: feat, fix, docs, style, refactor, test, chore\n- Subject: One-line summary (50-72 chars max)\n- Body: REQUIRED for multiple files or significant changes\n  * List major changes as bullet points\n  * Group related changes together\n  * Be specific about what changed in each area\n  * Use present tense (\"add\" not \"added\")\n\n**Rules:**\n1. If 5+ files changed, ALWAYS include a detailed body\n2. Group changes by category (security, docs, features, fixes)\n3. List key files or modules that changed\n4. Explain WHY for breaking changes\n5. Add '!' after type for BREAKING CHANGES\n\n**Example for multiple files:**\nfeat(security)!: implement comprehensive security enhancements\n\nSecurity improvements:\n- Add SecretStorage API for encrypted key storage\n- Implement rate limiting with sliding window algorithm\n- Add input validation and error sanitization\n- Filter sensitive files from diffs (.env, *.key, etc.)\n\nFeatures added:\n- Local caching of commit suggestions\n- Review mode with edit/regenerate options\n- Request timeout and cancellation support\n- Enhanced conventional commits validation\n\nDocumentation:\n- Add comprehensive README with security guide\n- Create SECURITY.md with best practices\n- Add CHANGELOG following Keep a Changelog format\n\nBREAKING CHANGE: API key now requires SecretStorage setup\n\n**Output ONLY the commit message. If you cannot see changes, output ERROR.**",
             "markdownDescription": "**Custom prompt template** for generating commit messages. Use `{changes}` as a placeholder for the git diff.",
             "editPresentation": "multilineText"
-          }
-        }
-      },
-      {
-        "title": "GitMsgOllama › Provider: OpenRouter",
-        "order": 21,
-        "properties": {
-          "gitmsgollama.openrouter.model": {
-            "type": "string",
-            "default": "google/gemini-2.0-flash-exp:free",
-            "markdownDescription": "**Model:** Use 'GitMsgOllama: Select Model' to browse 400+ available models"
-          },
-          "gitmsgollama.openrouter.baseUrl": {
-            "type": "string",
-            "default": "https://openrouter.ai/api/v1",
-            "markdownDescription": "**API base URL** (usually no need to change)"
-          }
-        }
-      },
-      {
-        "title": "GitMsgOllama › Provider: OpenAI",
-        "order": 22,
-        "properties": {
-          "gitmsgollama.openai.model": {
-            "type": "string",
-            "default": "gpt-5-nano",
-            "markdownDescription": "**Model:** Use 'GitMsgOllama: Select Model' to see available models"
-          },
-          "gitmsgollama.openai.baseUrl": {
-            "type": "string",
-            "default": "https://api.openai.com/v1",
-            "markdownDescription": "**API base URL** (change for Azure OpenAI or custom endpoints)"
-          }
-        }
-      },
-      {
-        "title": "GitMsgOllama › Provider: Google",
-        "order": 23,
-        "properties": {
-          "gitmsgollama.google.model": {
-            "type": "string",
-            "default": "gemini-2.5-flash-lite-preview-09-2025",
-            "markdownDescription": "**Model:** Use 'GitMsgOllama: Select Model' to see available Gemini models"
-          },
-          "gitmsgollama.google.baseUrl": {
-            "type": "string",
-            "default": "https://generativelanguage.googleapis.com/v1beta",
-            "markdownDescription": "**API base URL** (usually no need to change)"
-          }
-        }
-      },
-      {
-        "title": "GitMsgOllama › Provider: Claude",
-        "order": 24,
-        "properties": {
-          "gitmsgollama.claude.model": {
-            "type": "string",
-            "default": "claude-sonnet-4-5-20250929",
-            "markdownDescription": "**Model:** Use 'GitMsgOllama: Select Model' to see available models"
-          },
-          "gitmsgollama.claude.baseUrl": {
-            "type": "string",
-            "default": "https://api.anthropic.com/v1",
-            "markdownDescription": "**API base URL** (usually no need to change)"
           }
         }
       },

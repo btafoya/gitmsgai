@@ -291,3 +291,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Report bugs: [GitHub Issues](https://github.com/btafoya/gitmsgollama/issues)
 - Security vulnerabilities: See [SECURITY.md](SECURITY.md)
 - Feature requests: [GitHub Issues](https://github.com/btafoya/gitmsgollama/issues)
+
+## Acknowledgments
+
+This project is a fork of [GitMsgAI](https://github.com/ChaseRichGit/gitmsgai) by [Chase Rich](https://github.com/ChaseRichGit). The original project provided the foundation for this privacy-focused Ollama-only version.
