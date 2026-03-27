@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the "GitMsgAI" extension will be documented in this file.
+All notable changes to the "GitMsgOllama" extension will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -24,14 +24,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Initial Release
 
-This is the first release of **GitMsgAI** (formerly "AI Commit Message Generator"). The extension has been completely rebranded with a new name and icon.
+This is the first release of **GitMsgOllama** (formerly "AI Commit Message Generator"). The extension has been completely rebranded with a new name and icon.
 
 #### Changed
-- **Rebranding**: Extension renamed from "AI Commit Message Generator" to "GitMsgAI"
+- **Rebranding**: Extension renamed from "AI Commit Message Generator" to "GitMsgOllama"
 - **New Icon**: Changed from sparkle to robot head icon
 - **Icon Position**: Robot head icon now appears inline in the git message input box
-- **Command Names**: All commands now use "GitMsgAI:" prefix
-- **UI Updates**: All UI text, notifications, and output channels updated to "GitMsgAI"
+- **Command Names**: All commands now use "GitMsgOllama:" prefix
+- **UI Updates**: All UI text, notifications, and output channels updated to "GitMsgOllama"
 
 #### Features
 - **Multi-Provider Support**: OpenRouter, OpenAI, Google, Claude, and Local (Ollama/LM Studio)
@@ -44,9 +44,9 @@ This is the first release of **GitMsgAI** (formerly "AI Commit Message Generator
 
 ---
 
-## Previous Version History (Pre-Rebrand as "GitMsgAI")
+## Previous Version History (Pre-Rebrand as "GitMsgOllama")
 
-The following versions were released under the original name "AI Commit Message Generator" before the rebrand to "GitMsgAI" at version 0.0.1.
+The following versions were released under the original name "AI Commit Message Generator" before the rebrand to "GitMsgOllama" at version 0.0.1.
 
 ## [0.0.0.6] - 2025-10-07
 
@@ -177,6 +177,6 @@ The following versions were released under the original name "AI Commit Message 
 - Missing validation for API responses
 - Control characters in commit messages
 
-[0.0.6]: https://github.com/btafoya/gitmsgai/compare/v0.0.5...v0.0.6
-[0.0.5]: https://github.com/btafoya/gitmsgai/compare/v0.0.1...v0.0.5
-[0.0.1]: https://github.com/btafoya/gitmsgai/releases/tag/v0.0.1
+[0.0.6]: https://github.com/btafoya/gitmsgollama/compare/v0.0.5...v0.0.6
+[0.0.5]: https://github.com/btafoya/gitmsgollama/compare/v0.0.1...v0.0.5
+[0.0.1]: https://github.com/btafoya/gitmsgollama/releases/tag/v0.0.1

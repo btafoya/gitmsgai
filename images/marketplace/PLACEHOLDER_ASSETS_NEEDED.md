@@ -19,7 +19,7 @@
 **File**: `feature-model-picker.png`
 **Size**: 800x600px minimum
 **Content**: Show the interactive model picker with pricing and details
-**Action**: Run `GitMsgAI: Select Model` command and screenshot the picker
+**Action**: Run `GitMsgOllama: Select Model` command and screenshot the picker
 
 ---
 
@@ -27,7 +27,7 @@
 **File**: `feature-provider-selection.png`
 **Size**: 800x600px minimum
 **Content**: Show the provider selection dropdown
-**Action**: Run `GitMsgAI: Select Provider` command and screenshot
+**Action**: Run `GitMsgOllama: Select Provider` command and screenshot
 
 ---
 

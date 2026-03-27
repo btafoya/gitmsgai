@@ -55,8 +55,8 @@ export function buildRequestHeaders(config: ProviderConfig): Record<string, stri
 
     // Add provider-specific headers
     if (config.provider === AIProvider.OpenRouter) {
-        headers['HTTP-Referer'] = 'https://github.com/btafoya/gitmsgai';
-        headers['X-Title'] = 'GitMsgAI VSCode Extension';
+        headers['HTTP-Referer'] = 'https://github.com/btafoya/gitmsgollama';
+        headers['X-Title'] = 'GitMsgOllama VSCode Extension';
     }
 
     // Add custom headers if provided

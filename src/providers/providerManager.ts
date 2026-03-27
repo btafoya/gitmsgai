@@ -7,7 +7,7 @@ import { AIProvider, ProviderConfig, DEFAULT_MODELS, PROVIDER_ENDPOINTS } from '
  * @returns Provider configuration from settings
  */
 export function getProviderConfig(provider: AIProvider): ProviderConfig {
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
 
     // Get provider-specific settings
     const providerConfig = config.get<any>(`${provider}`);
@@ -40,7 +40,7 @@ export async function getProviderApiKey(
     provider: AIProvider
 ): Promise<string | undefined> {
     try {
-        const secretKey = `gitmsgai.${provider}.apiKey`;
+        const secretKey = `gitmsgollama.${provider}.apiKey`;
         return await context.secrets.get(secretKey);
     } catch (error: any) {
         console.error(`Error retrieving API key for ${provider}:`, error);
@@ -61,7 +61,7 @@ export async function setProviderApiKey(
     apiKey: string
 ): Promise<void> {
     try {
-        const secretKey = `gitmsgai.${provider}.apiKey`;
+        const secretKey = `gitmsgollama.${provider}.apiKey`;
         await context.secrets.store(secretKey, apiKey);
     } catch (error: any) {
         console.error(`Error storing API key for ${provider}:`, error);

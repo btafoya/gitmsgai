@@ -13,13 +13,13 @@ import * as vscode from 'vscode';
 import { RateLimiter } from './rateLimiter';
 
 // Workspace state key for consent (SEC-07)
-export const CONSENT_STATE_KEY = 'gitmsgai.userConsent';
+export const CONSENT_STATE_KEY = 'gitmsgollama.userConsent';
 
 /**
  * Shows the user consent warning for first-run or when reset (SEC-07)
  */
 export async function checkUserConsent(context: vscode.ExtensionContext): Promise<boolean> {
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
     const showConsentWarning = config.get<boolean>('showConsentWarning', true);
 
     // If user has disabled the warning in settings, assume consent
@@ -62,20 +62,20 @@ export async function checkUserConsent(context: vscode.ExtensionContext): Promis
  */
 export function initializeRateLimiter(context: vscode.ExtensionContext): RateLimiter {
     // Initialize rate limiter with configurable limit (SEC-05)
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
     const rateLimitPerMinute = config.get<number>('rateLimitPerMinute', 10);
     const rateLimiter = new RateLimiter(rateLimitPerMinute);
 
     // Update rate limiter when configuration changes
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration(e => {
-            if (e.affectsConfiguration('gitmsgai.rateLimitPerMinute')) {
-                const newLimit = vscode.workspace.getConfiguration('gitmsgai').get<number>('rateLimitPerMinute', 10);
+            if (e.affectsConfiguration('gitmsgollama.rateLimitPerMinute')) {
+                const newLimit = vscode.workspace.getConfiguration('gitmsgollama').get<number>('rateLimitPerMinute', 10);
                 rateLimiter.updateMaxRequests(newLimit);
             }
             // Reset consent if showConsentWarning is re-enabled
-            if (e.affectsConfiguration('gitmsgai.showConsentWarning')) {
-                const showWarning = vscode.workspace.getConfiguration('gitmsgai').get<boolean>('showConsentWarning', true);
+            if (e.affectsConfiguration('gitmsgollama.showConsentWarning')) {
+                const showWarning = vscode.workspace.getConfiguration('gitmsgollama').get<boolean>('showConsentWarning', true);
                 if (showWarning) {
                     context.workspaceState.update(CONSENT_STATE_KEY, undefined);
                 }

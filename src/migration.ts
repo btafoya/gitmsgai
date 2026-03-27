@@ -28,7 +28,7 @@ export async function migrateToMultiProvider(context: vscode.ExtensionContext): 
             return;
         }
 
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         let migrationPerformed = false;
 
         // Get old settings
@@ -72,7 +72,7 @@ export async function migrateToMultiProvider(context: vscode.ExtensionContext): 
             // Migrate API key if we have an old API key
             if (oldApiKey && oldApiKey.trim() !== '') {
                 // Check if new API key location already has a value
-                const newApiKey = await context.secrets.get('gitmsgai.openrouter.apiKey');
+                const newApiKey = await context.secrets.get('gitmsgollama.openrouter.apiKey');
 
                 // Only migrate if new location is empty
                 if (!newApiKey) {
@@ -91,7 +91,7 @@ export async function migrateToMultiProvider(context: vscode.ExtensionContext): 
             // Show information message to user if migration was performed
             if (migrationPerformed) {
                 const action = await vscode.window.showInformationMessage(
-                    'GitMsgAI: Your configuration has been migrated to support multiple AI providers. ' +
+                    'GitMsgOllama: Your configuration has been migrated to support multiple AI providers. ' +
                     'You can now switch between OpenRouter, OpenAI, Google, Claude, and local models.',
                     'Learn More',
                     'OK'
@@ -100,7 +100,7 @@ export async function migrateToMultiProvider(context: vscode.ExtensionContext): 
                 if (action === 'Learn More') {
                     vscode.window.showInformationMessage(
                         'Your existing OpenRouter settings have been preserved and moved to the new multi-provider structure. ' +
-                        'You can now use the "GitMsgAI: Select Provider" command to switch between different AI providers. ' +
+                        'You can now use the "GitMsgOllama: Select Provider" command to switch between different AI providers. ' +
                         'Your old settings are kept for backward compatibility.'
                     );
                 }

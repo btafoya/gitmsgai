@@ -36,13 +36,13 @@ import {
 } from './commands/providerCommands';
 
 // Create output channel for debugging
-const outputChannel = vscode.window.createOutputChannel('GitMsgAI');
+const outputChannel = vscode.window.createOutputChannel('GitMsgOllama');
 
 export function activate(context: vscode.ExtensionContext) {
     const cache = new CommitMessageCache(context);
-    const version = vscode.extensions.getExtension('btafoya.gitmsgai')?.packageJSON.version || 'unknown';
+    const version = vscode.extensions.getExtension('btafoya.gitmsgollama')?.packageJSON.version || 'unknown';
     const now = new Date().toISOString();
-    outputChannel.appendLine(`GitMsgAI extension activated - v${version} - ${now}`);
+    outputChannel.appendLine(`GitMsgOllama extension activated - v${version} - ${now}`);
 
     // Initialize rate limiter (SEC-05)
     const rateLimiter = initializeRateLimiter(context);
@@ -66,13 +66,13 @@ export function activate(context: vscode.ExtensionContext) {
             // Show a friendly update notification without requiring reload
             // The extension is already running the new code after update
             const action = await vscode.window.showInformationMessage(
-                `GitMsgAI updated to v${currentVersion}! 🎉`,
+                `GitMsgOllama updated to v${currentVersion}! 🎉`,
                 'What\'s New',
                 'Dismiss'
             );
 
             if (action === 'What\'s New') {
-                vscode.env.openExternal(vscode.Uri.parse('https://github.com/btafoya/gitmsgai/blob/main/CHANGELOG.md'));
+                vscode.env.openExternal(vscode.Uri.parse('https://github.com/btafoya/gitmsgollama/blob/main/CHANGELOG.md'));
             }
         }
         // First time activation
@@ -83,18 +83,18 @@ export function activate(context: vscode.ExtensionContext) {
 
             // Welcome the user and open settings
             const action = await vscode.window.showInformationMessage(
-                'Welcome to GitMsgAI! 🎉 Get started by setting up your OpenRouter API key and selecting your preferred AI model.',
+                'Welcome to GitMsgOllama! 🎉 Get started by setting up your OpenRouter API key and selecting your preferred AI model.',
                 'Open Settings',
                 'Set API Key',
                 'Select Model'
             );
 
             if (action === 'Open Settings') {
-                vscode.commands.executeCommand('workbench.action.openSettings', '@ext:btafoya.gitmsgai');
+                vscode.commands.executeCommand('workbench.action.openSettings', '@ext:btafoya.gitmsgollama');
             } else if (action === 'Set API Key') {
-                vscode.commands.executeCommand('gitmsgai.setApiKey');
+                vscode.commands.executeCommand('gitmsgollama.setApiKey');
             } else if (action === 'Select Model') {
-                vscode.commands.executeCommand('gitmsgai.selectModel');
+                vscode.commands.executeCommand('gitmsgollama.selectModel');
             }
         }
         // Existing installation, same version - just update stored version if needed
@@ -118,7 +118,7 @@ export function activate(context: vscode.ExtensionContext) {
             const migrated = await migrateApiKey(context);
             if (migrated) {
                 const action = await vscode.window.showInformationMessage(
-                    'GitMsgAI: Your OpenRouter API key has been migrated to secure storage.',
+                    'GitMsgOllama: Your OpenRouter API key has been migrated to secure storage.',
                     'Learn More',
                     'OK'
                 );
@@ -136,19 +136,19 @@ export function activate(context: vscode.ExtensionContext) {
     })();
 
     // Register provider commands
-    const setApiKeyCommand = vscode.commands.registerCommand('gitmsgai.setApiKey', async () => {
+    const setApiKeyCommand = vscode.commands.registerCommand('gitmsgollama.setApiKey', async () => {
         await setApiKeyProviderCommand(context);
     });
 
-    const selectProviderCommandDisposable = vscode.commands.registerCommand('gitmsgai.selectProvider', async () => {
+    const selectProviderCommandDisposable = vscode.commands.registerCommand('gitmsgollama.selectProvider', async () => {
         await selectProviderCommand(context);
     });
 
-    const testConnectionCommandDisposable = vscode.commands.registerCommand('gitmsgai.testConnection', async () => {
+    const testConnectionCommandDisposable = vscode.commands.registerCommand('gitmsgollama.testConnection', async () => {
         await testConnectionCommand(context);
     });
 
-    let disposable = vscode.commands.registerCommand('gitmsgai.generateCommitMessage', async () => {
+    let disposable = vscode.commands.registerCommand('gitmsgollama.generateCommitMessage', async () => {
         try {
             // Perform security checks (SEC-05, SEC-07)
             const checkedRateLimiter = await performSecurityChecks(context, rateLimiter);
@@ -268,7 +268,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const totalChanges = stagedChanges.length + workingTreeChanges.length;
                 if (totalChanges > 0) {
                     vscode.window.showErrorMessage(
-                        `Found ${totalChanges} changed files but could not get diff. Please check the "GitMsgAI" output panel.`
+                        `Found ${totalChanges} changed files but could not get diff. Please check the "GitMsgOllama" output panel.`
                     );
                     outputChannel.appendLine('Changed files:');
                     [...stagedChanges, ...workingTreeChanges].forEach((change: any, index: number) => {
@@ -335,7 +335,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             // Get current provider from settings with backward compatibility
-            const config = vscode.workspace.getConfiguration('gitmsgai');
+            const config = vscode.workspace.getConfiguration('gitmsgollama');
             const currentProvider = config.get<string>('provider', 'openrouter') as AIProvider;
 
             // Get provider-specific model with fallback to old 'model' setting for backward compatibility
@@ -379,7 +379,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (filterResult.allFilesExcluded) {
                 vscode.window.showErrorMessage(
                     'All changed files match exclusion patterns. No changes to analyze. ' +
-                    'Please review your gitmsgai.excludePatterns setting or stage different files.'
+                    'Please review your gitmsgollama.excludePatterns setting or stage different files.'
                 );
                 return;
             }
@@ -399,13 +399,13 @@ export function activate(context: vscode.ExtensionContext) {
             /*
             if (!apiKey) {
                 const action = await vscode.window.showErrorMessage(
-                    'OpenRouter API key is not set. Please configure your API key to use GitMsgAI.',
+                    'OpenRouter API key is not set. Please configure your API key to use GitMsgOllama.',
                     'Set API Key',
                     'Cancel'
                 );
 
                 if (action === 'Set API Key') {
-                    await vscode.commands.executeCommand('gitmsgai.setApiKey');
+                    await vscode.commands.executeCommand('gitmsgollama.setApiKey');
                 }
                 return;
             }
@@ -526,7 +526,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     // Register clear cache command
-    let clearCacheCommand = vscode.commands.registerCommand('gitmsgai.clearCache', async () => {
+    let clearCacheCommand = vscode.commands.registerCommand('gitmsgollama.clearCache', async () => {
         try {
             const cacheSize = cache.getSize();
             if (cacheSize === 0) {
@@ -550,7 +550,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     // Register model picker command
-    let selectModelCommandDisposable = vscode.commands.registerCommand('gitmsgai.selectModel', async () => {
+    let selectModelCommandDisposable = vscode.commands.registerCommand('gitmsgollama.selectModel', async () => {
         await selectModelCommand(context);
     });
 

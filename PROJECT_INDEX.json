@@ -1,6 +1,6 @@
 {
   "project": {
-    "name": "GitMsgAI",
+    "name": "GitMsgOllama",
     "version": "0.0.6",
     "description": "AI-powered commit message generator for VS Code with 5 providers and 400+ models",
     "type": "vscode-extension",
@@ -73,12 +73,12 @@
     }
   ],
   "commands": [
-    "gitmsgai.generateCommitMessage",
-    "gitmsgai.selectProvider",
-    "gitmsgai.setApiKey",
-    "gitmsgai.selectModel",
-    "gitmsgai.testConnection",
-    "gitmsgai.clearCache"
+    "gitmsgollama.generateCommitMessage",
+    "gitmsgollama.selectProvider",
+    "gitmsgollama.setApiKey",
+    "gitmsgollama.selectModel",
+    "gitmsgollama.testConnection",
+    "gitmsgollama.clearCache"
   ],
   "providers": ["openrouter", "openai", "google", "claude", "local"],
   "dependencies": {
@@ -97,10 +97,10 @@
     "changelog": "CHANGELOG.md"
   },
   "settings": {
-    "gitmsgai.provider": "openrouter",
-    "gitmsgai.timeout": 30,
-    "gitmsgai.rateLimitPerMinute": 10,
-    "gitmsgai.enableCache": false,
-    "gitmsgai.reviewBeforeApply": false
+    "gitmsgollama.provider": "openrouter",
+    "gitmsgollama.timeout": 30,
+    "gitmsgollama.rateLimitPerMinute": 10,
+    "gitmsgollama.enableCache": false,
+    "gitmsgollama.reviewBeforeApply": false
   }
 }

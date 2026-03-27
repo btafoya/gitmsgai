@@ -1,4 +1,4 @@
-# Project Index: GitMsgAI
+# Project Index: GitMsgOllama
 
 **Generated:** 2026-03-27
 
@@ -13,7 +13,7 @@ AI-powered commit message generator for VS Code. Supports 5 AI providers (OpenRo
 ## 📁 Project Structure
 
 ```
-gitmsgai/
+gitmsgollama/
 ├── src/
 │   ├── extension.ts         # Main extension entry point
 │   ├── cache.ts             # Commit message caching
@@ -104,12 +104,12 @@ gitmsgai/
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `gitmsgai.provider` | `openrouter` | AI provider |
-| `gitmsgai.timeout` | `30` | API timeout (seconds) |
-| `gitmsgai.rateLimitPerMinute` | `10` | Rate limit |
-| `gitmsgai.enableCache` | `false` | Enable caching |
-| `gitmsgai.reviewBeforeApply` | `false` | Review mode |
-| `gitmsgai.conventionalCommits.enabled` | `false` | Conventional commits |
+| `gitmsgollama.provider` | `openrouter` | AI provider |
+| `gitmsgollama.timeout` | `30` | API timeout (seconds) |
+| `gitmsgollama.rateLimitPerMinute` | `10` | Rate limit |
+| `gitmsgollama.enableCache` | `false` | Enable caching |
+| `gitmsgollama.reviewBeforeApply` | `false` | Review mode |
+| `gitmsgollama.conventionalCommits.enabled` | `false` | Conventional commits |
 
 ## 📚 Documentation
 
@@ -143,12 +143,12 @@ gitmsgai/
 
 | Command | Description |
 |---------|-------------|
-| `gitmsgai.generateCommitMessage` | Generate commit message |
-| `gitmsgai.selectProvider` | Choose AI provider |
-| `gitmsgai.setApiKey` | Set API key |
-| `gitmsgai.selectModel` | Browse/select models |
-| `gitmsgai.testConnection` | Test provider connection |
-| `gitmsgai.clearCache` | Clear cached messages |
+| `gitmsgollama.generateCommitMessage` | Generate commit message |
+| `gitmsgollama.selectProvider` | Choose AI provider |
+| `gitmsgollama.setApiKey` | Set API key |
+| `gitmsgollama.selectModel` | Browse/select models |
+| `gitmsgollama.testConnection` | Test provider connection |
+| `gitmsgollama.clearCache` | Clear cached messages |
 
 ## Security Features
 

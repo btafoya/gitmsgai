@@ -3,7 +3,7 @@ import { getProviderApiKey as getProviderApiKeyFromManager } from './providers/p
 
 /**
  * Secret storage key for OpenRouter API key (SEC-01, SEC-02, SEC-03)
- * DEPRECATED: This is the old location. New keys are stored as 'gitmsgai.{provider}.apiKey'
+ * DEPRECATED: This is the old location. New keys are stored as 'gitmsgollama.{provider}.apiKey'
  * Kept for backward compatibility.
  */
 const API_KEY_SECRET = 'openRouterApiKey';
@@ -29,7 +29,7 @@ export async function migrateApiKey(context: vscode.ExtensionContext): Promise<b
         }
 
         // Check for old configuration
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         const oldApiKey = config.get<string>(OLD_API_KEY_CONFIG);
 
         if (oldApiKey && oldApiKey.trim() !== '') {
@@ -54,9 +54,9 @@ export async function migrateApiKey(context: vscode.ExtensionContext): Promise<b
 /**
  * Retrieves the API key from SecretStorage with backward compatibility (SEC-01)
  * This function checks multiple locations for the API key to ensure backward compatibility:
- * 1. New location based on current provider: 'gitmsgai.{provider}.apiKey'
+ * 1. New location based on current provider: 'gitmsgollama.{provider}.apiKey'
  * 2. Old SecretStorage location: 'openRouterApiKey'
- * 3. Deprecated configuration setting: 'gitmsgai.openRouterApiKey'
+ * 3. Deprecated configuration setting: 'gitmsgollama.openRouterApiKey'
  *
  * @param context Extension context
  * @returns API key or undefined if not set
@@ -64,12 +64,12 @@ export async function migrateApiKey(context: vscode.ExtensionContext): Promise<b
 export async function getApiKey(context: vscode.ExtensionContext): Promise<string | undefined> {
     try {
         // Get current provider from settings
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         const provider = config.get<string>('provider') || 'openrouter';
 
         // First, try new location based on current provider
         try {
-            const newApiKey = await context.secrets.get(`gitmsgai.${provider}.apiKey`);
+            const newApiKey = await context.secrets.get(`gitmsgollama.${provider}.apiKey`);
             if (newApiKey && newApiKey.trim() !== '') {
                 return newApiKey;
             }
@@ -113,11 +113,11 @@ export async function getApiKey(context: vscode.ExtensionContext): Promise<strin
 export async function setApiKeySecure(context: vscode.ExtensionContext, apiKey: string): Promise<void> {
     try {
         // Get current provider from settings
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         const provider = config.get<string>('provider') || 'openrouter';
 
         // Store in new location (provider-specific)
-        await context.secrets.store(`gitmsgai.${provider}.apiKey`, apiKey);
+        await context.secrets.store(`gitmsgollama.${provider}.apiKey`, apiKey);
 
         // Also store in old location for backward compatibility
         // This ensures older versions of the extension can still access the key

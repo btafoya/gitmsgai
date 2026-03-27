@@ -12,7 +12,7 @@ export interface CacheData {
 
 export class CommitMessageCache {
     private context: vscode.ExtensionContext;
-    private cacheKey = 'gitmsgai.messageCache';
+    private cacheKey = 'gitmsgollama.messageCache';
 
     constructor(context: vscode.ExtensionContext) {
         this.context = context;
@@ -42,7 +42,7 @@ export class CommitMessageCache {
         const cache = this.context.workspaceState.get<CacheData>(this.cacheKey, {});
 
         // Get cache size from configuration
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         const cacheSize = config.get<number>('cacheSize') || 10;
 
         // Add new entry

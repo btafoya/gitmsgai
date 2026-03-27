@@ -383,7 +383,7 @@ export function suggestConventionalFormat(
  * @returns Conventional commits configuration
  */
 export function getConventionalCommitsConfig(): ConventionalCommitsConfig {
-    const config = vscode.workspace.getConfiguration('gitmsgai.conventionalCommits');
+    const config = vscode.workspace.getConfiguration('gitmsgollama.conventionalCommits');
 
     return {
         enabled: config.get<boolean>('enabled', true),

@@ -61,7 +61,7 @@ let pricingCacheTimestamp: number = 0;
  * Get cache duration from settings (in milliseconds)
  */
 function getCacheDuration(): number {
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
     const hours = config.get<number>('modelsUpdateInterval', 24);
     return hours * 60 * 60 * 1000; // Convert hours to milliseconds
 }
@@ -70,7 +70,7 @@ function getCacheDuration(): number {
  * Check if auto-update is enabled
  */
 function isAutoUpdateEnabled(): boolean {
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
     return config.get<boolean>('autoUpdateModels', true);
 }
 
@@ -218,7 +218,7 @@ async function fetchAndCachePricing(): Promise<void> {
         const response = await axios.get<ModelsResponse>('https://openrouter.ai/api/v1/models', {
             timeout: 10000,
             headers: {
-                'User-Agent': 'GitMsgAI-VSCode/1.0'
+                'User-Agent': 'GitMsgOllama-VSCode/1.0'
             }
         });
 
@@ -243,9 +243,9 @@ async function fetchAndCachePricing(): Promise<void> {
         }
 
         pricingCacheTimestamp = Date.now();
-        console.log(`GitMsgAI: Cached pricing for ${pricingCache.size} models from OpenRouter`);
+        console.log(`GitMsgOllama: Cached pricing for ${pricingCache.size} models from OpenRouter`);
     } catch (error) {
-        console.error('GitMsgAI: Failed to fetch pricing from OpenRouter:', error);
+        console.error('GitMsgOllama: Failed to fetch pricing from OpenRouter:', error);
     }
 }
 
@@ -472,7 +472,7 @@ async function fetchClaudeModels(apiKey?: string): Promise<OpenRouterModel[]> {
  * Fetch models from Local API (Ollama/LM Studio)
  */
 async function fetchLocalModels(apiKey?: string): Promise<OpenRouterModel[]> {
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
     const baseUrl = config.get<string>('local.baseUrl', 'http://localhost:11434/v1');
 
     try {
@@ -630,11 +630,11 @@ export async function showModelPicker(context: vscode.ExtensionContext, forceRef
         // Fetch pricing data from OpenRouter (for all providers)
         // This runs in background and updates cache if needed
         fetchAndCachePricing().catch(err => {
-            console.error('GitMsgAI: Failed to fetch pricing data:', err);
+            console.error('GitMsgOllama: Failed to fetch pricing data:', err);
         });
 
         // Get current provider from settings
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         const currentProvider = config.get<string>('provider', 'openrouter') as AIProvider;
 
         // Show loading indicator
@@ -678,7 +678,7 @@ export async function showModelPicker(context: vscode.ExtensionContext, forceRef
                     placeHolder: 'Select an AI model for commit message generation',
                     matchOnDescription: true,
                     matchOnDetail: true,
-                    title: `GitMsgAI: Select Model (${currentProvider})`
+                    title: `GitMsgOllama: Select Model (${currentProvider})`
                 });
 
                 if (!selected) {
@@ -688,7 +688,7 @@ export async function showModelPicker(context: vscode.ExtensionContext, forceRef
                 // Check if user selected the "Switch Provider" action
                 if (selected.label === '$(arrow-swap) Switch Provider...') {
                     // Execute the selectProvider command
-                    await vscode.commands.executeCommand('gitmsgai.selectProvider');
+                    await vscode.commands.executeCommand('gitmsgollama.selectProvider');
                     return undefined;
                 }
 
@@ -713,13 +713,13 @@ export async function selectModelCommand(context: vscode.ExtensionContext, force
     }
 
     // Get current provider
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
     const currentProvider = config.get<string>('provider', 'openrouter') as AIProvider;
 
     // Update configuration to provider-specific setting
     await config.update(`${currentProvider}.model`, modelId, vscode.ConfigurationTarget.Global);
 
-    vscode.window.showInformationMessage(`GitMsgAI model updated to: ${modelId}`);
+    vscode.window.showInformationMessage(`GitMsgOllama model updated to: ${modelId}`);
 }
 
 /**
@@ -728,7 +728,7 @@ export async function selectModelCommand(context: vscode.ExtensionContext, force
 export function initializePricingCache(): void {
     // Fetch pricing data in background on startup
     fetchAndCachePricing().catch(err => {
-        console.error('GitMsgAI: Failed to initialize pricing cache:', err);
+        console.error('GitMsgOllama: Failed to initialize pricing cache:', err);
     });
 }
 
@@ -736,7 +736,7 @@ export function initializePricingCache(): void {
  * Initialize auto-update timer for models list
  */
 export function initializeAutoUpdate(context: vscode.ExtensionContext): void {
-    const config = vscode.workspace.getConfiguration('gitmsgai');
+    const config = vscode.workspace.getConfiguration('gitmsgollama');
     const autoUpdate = config.get<boolean>('autoUpdateModels', true);
 
     if (!autoUpdate) {
@@ -750,16 +750,16 @@ export function initializeAutoUpdate(context: vscode.ExtensionContext): void {
     const timer = setInterval(async () => {
         try {
             const currentProvider = config.get<string>('provider', 'openrouter') as AIProvider;
-            console.log(`GitMsgAI: Auto-updating models list from ${currentProvider}...`);
+            console.log(`GitMsgOllama: Auto-updating models list from ${currentProvider}...`);
 
             // Only fetch from API for OpenRouter
             if (currentProvider === AIProvider.OpenRouter) {
                 const apiKey = await getProviderApiKey(context, currentProvider);
                 await fetchModels(currentProvider, true, apiKey); // Force refresh
-                console.log('GitMsgAI: Models list updated successfully');
+                console.log('GitMsgOllama: Models list updated successfully');
             }
         } catch (error) {
-            console.error('GitMsgAI: Failed to auto-update models list:', error);
+            console.error('GitMsgOllama: Failed to auto-update models list:', error);
         }
     }, intervalMs);
 
@@ -773,7 +773,7 @@ export function initializeAutoUpdate(context: vscode.ExtensionContext): void {
     if (currentProvider === AIProvider.OpenRouter) {
         getProviderApiKey(context, currentProvider).then(apiKey => {
             fetchModels(currentProvider, false, apiKey).catch(error => {
-                console.error('GitMsgAI: Failed to fetch models on startup:', error);
+                console.error('GitMsgOllama: Failed to fetch models on startup:', error);
             });
         });
     }

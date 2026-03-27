@@ -1,6 +1,6 @@
 # Ollama Provider Guide
 
-This guide provides detailed information about using Ollama with GitMsgAI for generating commit messages locally.
+This guide provides detailed information about using Ollama with GitMsgOllama for generating commit messages locally.
 
 ## Table of Contents
 
@@ -8,7 +8,7 @@ This guide provides detailed information about using Ollama with GitMsgAI for ge
 - [Benefits](#benefits)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Setup in GitMsgAI](#setup-in-gitmsgai)
+- [Setup in GitMsgOllama](#setup-in-gitmsgollama)
 - [Recommended Models](#recommended-models)
 - [Performance Tips](#performance-tips)
 - [Troubleshooting](#troubleshooting)
@@ -16,7 +16,7 @@ This guide provides detailed information about using Ollama with GitMsgAI for ge
 
 ## Overview
 
-GitMsgAI supports running AI models completely locally on your machine using Ollama for maximum privacy and zero API costs.
+GitMsgOllama supports running AI models completely locally on your machine using Ollama for maximum privacy and zero API costs.
 
 ## Benefits
 
@@ -49,14 +49,14 @@ GitMsgAI supports running AI models completely locally on your machine using Oll
    ollama pull llama2:13b
    ```
 
-## Setup in GitMsgAI
+## Setup in GitMsgOllama
 
 1. Ensure Ollama is running (it starts automatically)
 2. Open Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
-3. Run: `GitMsgAI: Select Provider`
+3. Run: `GitMsgOllama: Select Provider`
 4. Choose "Local"
 5. Set base URL: `http://localhost:11434/v1` (default)
-6. Run: `GitMsgAI: Select Model`
+6. Run: `GitMsgOllama: Select Model`
 7. Choose your downloaded model
 
 ## Recommended Models
@@ -120,9 +120,9 @@ GitMsgAI supports running AI models completely locally on your machine using Oll
 ### Quality
 
 1. **Use larger models for important commits**: 13B models for release notes, major features
-2. **Review before committing**: Enable `gitmsgai.reviewBeforeApply`
+2. **Review before committing**: Enable `gitmsgollama.reviewBeforeApply`
 3. **Customize prompts**: Tailor to your team's commit style
 
 ---
 
-**Need more help?** Check the [main README](../README.md) or [open an issue](https://github.com/btafoya/gitmsgai/issues).
+**Need more help?** Check the [main README](../README.md) or [open an issue](https://github.com/btafoya/gitmsgollama/issues).

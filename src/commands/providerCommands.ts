@@ -45,7 +45,7 @@ export async function selectProviderCommand(context: vscode.ExtensionContext): P
         // Show QuickPick
         const selected = await vscode.window.showQuickPick(providerItems, {
             placeHolder: 'Select an AI provider for generating commit messages',
-            title: 'GitMsgAI: Select Provider'
+            title: 'GitMsgOllama: Select Provider'
         });
 
         if (!selected) {
@@ -68,7 +68,7 @@ export async function selectProviderCommand(context: vscode.ExtensionContext): P
         }
 
         // Update settings with selected provider
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         await config.update('provider', provider, vscode.ConfigurationTarget.Global);
 
         vscode.window.showInformationMessage(`AI provider set to ${selected.label}`);
@@ -100,7 +100,7 @@ export async function selectProviderCommand(context: vscode.ExtensionContext): P
 export async function setApiKeyCommand(context: vscode.ExtensionContext): Promise<void> {
     try {
         // Get current provider from settings
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         const providerString = config.get<string>('provider', 'openrouter');
         const provider = providerString as AIProvider;
 
@@ -215,7 +215,7 @@ export async function setApiKeyCommand(context: vscode.ExtensionContext): Promis
 export async function testConnectionCommand(context: vscode.ExtensionContext): Promise<void> {
     try {
         // Get current provider from settings
-        const config = vscode.workspace.getConfiguration('gitmsgai');
+        const config = vscode.workspace.getConfiguration('gitmsgollama');
         const providerString = config.get<string>('provider', 'openrouter');
         const provider = providerString as AIProvider;
 
@@ -229,9 +229,9 @@ export async function testConnectionCommand(context: vscode.ExtensionContext): P
             );
 
             if (action === 'Configure Provider') {
-                await vscode.commands.executeCommand('gitmsgai.selectProvider');
+                await vscode.commands.executeCommand('gitmsgollama.selectProvider');
             } else if (action === 'Set API Key') {
-                await vscode.commands.executeCommand('gitmsgai.setApiKey');
+                await vscode.commands.executeCommand('gitmsgollama.setApiKey');
             }
             return;
         }

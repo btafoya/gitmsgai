@@ -2,7 +2,7 @@
 
 ## Security Features
 
-The GitMsgAI VSCode extension implements multiple layers of security to protect your sensitive data:
+The GitMsgOllama VSCode extension implements multiple layers of security to protect your sensitive data:
 
 ### 1. Secure API Key Storage
 
@@ -12,7 +12,7 @@ The GitMsgAI VSCode extension implements multiple layers of security to protect 
   - macOS: Keychain
   - Linux: Secret Service API (libsecret)
 - **No plain text storage**: API keys never appear in `settings.json` or any configuration files
-- **Automatic migration**: If you previously stored your API key in settings, use the `GitMsgAI: Set OpenRouter API Key` command to migrate to secure storage
+- **Automatic migration**: If you previously stored your API key in settings, use the `GitMsgOllama: Set OpenRouter API Key` command to migrate to secure storage
 
 ### 2. Rate Limiting
 
@@ -36,12 +36,12 @@ The extension automatically filters out sensitive files from git diffs before se
 **Configuration**:
 ```json
 {
-  "gitmsgai.excludePatterns": [
+  "gitmsgollama.excludePatterns": [
     ".env*",
     "*.key",
     "custom-secret-*.json"
   ],
-  "gitmsgai.warnOnSensitiveFiles": true
+  "gitmsgollama.warnOnSensitiveFiles": true
 }
 ```
 
@@ -79,7 +79,7 @@ When sensitive files are detected:
 
 **First-run consent warning**:
 - Explains what data is sent to OpenRouter
-- Can be disabled via `gitmsgai.showConsentWarning: false`
+- Can be disabled via `gitmsgollama.showConsentWarning: false`
 - Provides link to privacy documentation
 
 **Transparency**:
@@ -171,7 +171,7 @@ This extension uses [OpenRouter](https://openrouter.ai/) to access various AI mo
 
 1. **Use the secure API key command**:
    ```
-   GitMsgAI: Set OpenRouter API Key
+   GitMsgOllama: Set OpenRouter API Key
    ```
    Don't store API keys in settings.json
 
@@ -183,7 +183,7 @@ This extension uses [OpenRouter](https://openrouter.ai/) to access various AI mo
 3. **Enable review mode** for sensitive repositories:
    ```json
    {
-     "gitmsgai.reviewBeforeApply": true
+     "gitmsgollama.reviewBeforeApply": true
    }
    ```
 
@@ -289,10 +289,10 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 ```json
 {
   // Security settings
-  "gitmsgai.rateLimitPerMinute": 10,
-  "gitmsgai.showConsentWarning": true,
-  "gitmsgai.reviewBeforeApply": true,
-  "gitmsgai.excludePatterns": [
+  "gitmsgollama.rateLimitPerMinute": 10,
+  "gitmsgollama.showConsentWarning": true,
+  "gitmsgollama.reviewBeforeApply": true,
+  "gitmsgollama.excludePatterns": [
     ".env*",
     "*.key",
     "*.pem",
@@ -304,12 +304,12 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
     "**/secrets/**",
     // Add your custom patterns here
   ],
-  "gitmsgai.warnOnSensitiveFiles": true,
+  "gitmsgollama.warnOnSensitiveFiles": true,
 
   // Feature settings
-  "gitmsgai.enableCache": true,
-  "gitmsgai.cacheSize": 10,
-  "gitmsgai.timeout": 30
+  "gitmsgollama.enableCache": true,
+  "gitmsgollama.cacheSize": 10,
+  "gitmsgollama.timeout": 30
 }
 ```
 
@@ -319,10 +319,10 @@ For sensitive projects or corporate environments:
 
 ```json
 {
-  "gitmsgai.rateLimitPerMinute": 5,
-  "gitmsgai.showConsentWarning": true,
-  "gitmsgai.reviewBeforeApply": true,
-  "gitmsgai.excludePatterns": [
+  "gitmsgollama.rateLimitPerMinute": 5,
+  "gitmsgollama.showConsentWarning": true,
+  "gitmsgollama.reviewBeforeApply": true,
+  "gitmsgollama.excludePatterns": [
     ".env*",
     "*.key",
     "*.pem",
@@ -336,9 +336,9 @@ For sensitive projects or corporate environments:
     "**/.aws/**",
     "**/private/**"
   ],
-  "gitmsgai.warnOnSensitiveFiles": true,
-  "gitmsgai.enableCache": false,
-  "gitmsgai.timeout": 15
+  "gitmsgollama.warnOnSensitiveFiles": true,
+  "gitmsgollama.enableCache": false,
+  "gitmsgollama.timeout": 15
 }
 ```
 
@@ -378,7 +378,7 @@ If using in a corporate environment:
 If you have questions about security that aren't covered here:
 
 1. Check the [README.md](README.md) for general documentation
-2. Search [existing issues](https://github.com/btafoya/gitmsgai/issues)
+2. Search [existing issues](https://github.com/btafoya/gitmsgollama/issues)
 3. Create a new issue for non-security-sensitive questions
 4. For security concerns, use the vulnerability reporting process above
 

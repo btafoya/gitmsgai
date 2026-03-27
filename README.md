@@ -1,22 +1,22 @@
-# GitMsgAI
+# GitMsgOllama
 
-> **[Install from VS Code Marketplace →](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgai)**
+> **[Install from VS Code Marketplace →](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)**
 
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/btafoya.gitmsgai?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgai)
-[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/btafoya.gitmsgai?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgai)
-[![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/btafoya.gitmsgai?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgai)
-[![GitHub License](https://img.shields.io/github/license/ChaseRichGit/gitmsgai?style=for-the-badge&logo=github&logoColor=white&color=green)](https://github.com/btafoya/gitmsgai/blob/main/LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/ChaseRichGit/gitmsgai?style=for-the-badge&logo=github&logoColor=white&color=orange)](https://github.com/btafoya/gitmsgai/issues)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/btafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/btafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)
+[![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/btafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)
+[![GitHub License](https://img.shields.io/github/license/ChaseRichGit/gitmsgollama?style=for-the-badge&logo=github&logoColor=white&color=green)](https://github.com/btafoya/gitmsgollama/blob/main/LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/ChaseRichGit/gitmsgollama?style=for-the-badge&logo=github&logoColor=white&color=orange)](https://github.com/btafoya/gitmsgollama/issues)
 
 ---
 
-![GitMsgAI](https://raw.githubusercontent.com/ChaseRichGit/gitmsgai/main/images/marketplace/GitMsgAI.gif)
+![GitMsgOllama](https://raw.githubusercontent.com/btafoya/gitmsgollama/main/images/marketplace/GitMsgOllama.gif)
 
 ---
 
 AI-powered commit message generator for VS Code. Get perfect commits in seconds using local AI with Ollama.
 
-## Why GitMsgAI?
+## Why GitMsgOllama?
 
 **Better than writing commits yourself:**
 - Consistent format across your team
@@ -34,7 +34,7 @@ AI-powered commit message generator for VS Code. Get perfect commits in seconds 
 
 1. Install [Ollama](https://ollama.ai/) (takes 1-2 minutes)
 2. Run: `ollama pull qwen2.5-coder`
-3. **[Install extension](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgai)**
+3. **[Install extension](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)**
 4. Click the robot icon in your Git panel
 5. Select "Local" provider
 6. Done! **No API key, no credit card, no tracking.**
@@ -57,17 +57,9 @@ AI-powered commit message generator for VS Code. Get perfect commits in seconds 
 
 ---
 
-### Model Selection
-![Model Picker](https://raw.githubusercontent.com/ChaseRichGit/gitmsgai/main/images/marketplace/Model.Picker.png)
-
-### Review Mode
-![Review Mode Placeholder](https://raw.githubusercontent.com/ChaseRichGit/gitmsgai/main/images/marketplace/GitMsgAI-Confirm.png)
-
----
-
 ## Local AI Setup
 
-GitMsgAI uses **Ollama** for completely local, private AI-powered commit messages.
+GitMsgOllama uses **Ollama** for completely local, private AI-powered commit messages.
 
 ### Supported Models
 
@@ -94,10 +86,10 @@ GitMsgAI uses **Ollama** for completely local, private AI-powered commit message
 
 4. **Configure in VS Code**:
    - Open Command Palette (Ctrl+Shift+P / Cmd+Shift+P)
-   - Run: `GitMsgAI: Select Provider`
+   - Run: `GitMsgOllama: Select Provider`
    - Choose "Local"
    - Set base URL: `http://localhost:11434/v1` (default)
-   - Run: `GitMsgAI: Select Model`
+   - Run: `GitMsgOllama: Select Model`
    - Choose your downloaded model
 
 5. **Start generating commit messages!**
@@ -137,7 +129,7 @@ When you generate a commit message for the same set of changes:
    - **Dismiss** - Cancel the operation
 
 To clear the cache:
-- Command Palette → `GitMsgAI: Clear Cache`
+- Command Palette → `GitMsgOllama: Clear Cache`
 
 ### Review Mode
 
@@ -145,7 +137,7 @@ Enable review mode to preview messages before applying:
 
 ```json
 {
-  "gitmsgai.reviewBeforeApply": true
+  "gitmsgollama.reviewBeforeApply": true
 }
 ```
 
@@ -169,9 +161,9 @@ Configure conventional commits:
 
 ```json
 {
-  "gitmsgai.conventionalCommits.enabled": true,
-  "gitmsgai.conventionalCommits.types": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
-  "gitmsgai.conventionalCommits.enableScopeDetection": true
+  "gitmsgollama.conventionalCommits.enabled": true,
+  "gitmsgollama.conventionalCommits.types": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
+  "gitmsgollama.conventionalCommits.enableScopeDetection": true
 }
 ```
 
@@ -181,29 +173,29 @@ Configure conventional commits:
 
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
-| `gitmsgai.provider` | string | `local` | AI provider (local only) |
-| `gitmsgai.local.model` | string | `qwen2.5-coder` | Local model (Ollama) |
-| `gitmsgai.local.baseUrl` | string | `http://localhost:11434/v1` | Ollama server URL |
-| `gitmsgai.prompt` | string | (see below) | Custom prompt template (use `{changes}` placeholder) |
-| `gitmsgai.timeout` | number | `30` | API request timeout in seconds |
+| `gitmsgollama.provider` | string | `local` | AI provider (local only) |
+| `gitmsgollama.local.model` | string | `qwen2.5-coder` | Local model (Ollama) |
+| `gitmsgollama.local.baseUrl` | string | `http://localhost:11434/v1` | Ollama server URL |
+| `gitmsgollama.prompt` | string | (see below) | Custom prompt template (use `{changes}` placeholder) |
+| `gitmsgollama.timeout` | number | `30` | API request timeout in seconds |
 
 ### Feature Settings
 
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
-| `gitmsgai.reviewBeforeApply` | boolean | `true` | Review messages before applying |
-| `gitmsgai.enableCache` | boolean | `true` | Enable commit message caching |
-| `gitmsgai.cacheSize` | number | `10` | Maximum cached messages |
+| `gitmsgollama.reviewBeforeApply` | boolean | `true` | Review messages before applying |
+| `gitmsgollama.enableCache` | boolean | `true` | Enable commit message caching |
+| `gitmsgollama.cacheSize` | number | `10` | Maximum cached messages |
 
 ### Conventional Commits Settings
 
 | Setting | Type | Default | Description |
 |---------|------|---------|-------------|
-| `gitmsgai.conventionalCommits.enabled` | boolean | `true` | Enable conventional commits support |
-| `gitmsgai.conventionalCommits.types` | array | `["feat", "fix", "docs", ...]` | Allowed commit types |
-| `gitmsgai.conventionalCommits.scopes` | array | `[]` | Allowed scopes (empty = any) |
-| `gitmsgai.conventionalCommits.enableScopeDetection` | boolean | `true` | Auto-detect scope from file paths |
-| `gitmsgai.conventionalCommits.requireScope` | boolean | `false` | Require scope in messages |
+| `gitmsgollama.conventionalCommits.enabled` | boolean | `true` | Enable conventional commits support |
+| `gitmsgollama.conventionalCommits.types` | array | `["feat", "fix", "docs", ...]` | Allowed commit types |
+| `gitmsgollama.conventionalCommits.scopes` | array | `[]` | Allowed scopes (empty = any) |
+| `gitmsgollama.conventionalCommits.enableScopeDetection` | boolean | `true` | Auto-detect scope from file paths |
+| `gitmsgollama.conventionalCommits.requireScope` | boolean | `false` | Require scope in messages |
 
 ### Default Prompt Template
 
@@ -273,12 +265,12 @@ For more detailed troubleshooting, see [docs/PROVIDERS.md](docs/PROVIDERS.md).
 
 | Command | Description |
 |---------|-------------|
-| `GitMsgAI: Generate Commit Message` | Generate a commit message for staged changes |
-| `GitMsgAI: Select Provider` | Choose your AI provider (Local) |
-| `GitMsgAI: Set API Key` | Not required for Local (no API key needed) |
-| `GitMsgAI: Select Model` | Browse and select from available Ollama models |
-| `GitMsgAI: Test Provider Connection` | Test your Ollama configuration |
-| `GitMsgAI: Clear Cache` | Clear all cached commit messages |
+| `GitMsgOllama: Generate Commit Message` | Generate a commit message for staged changes |
+| `GitMsgOllama: Select Provider` | Choose your AI provider (Local) |
+| `GitMsgOllama: Set API Key` | Not required for Local (no API key needed) |
+| `GitMsgOllama: Select Model` | Browse and select from available Ollama models |
+| `GitMsgOllama: Test Provider Connection` | Test your Ollama configuration |
+| `GitMsgOllama: Clear Cache` | Clear all cached commit messages |
 
 ## Development
 
@@ -296,6 +288,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- Report bugs: [GitHub Issues](https://github.com/btafoya/gitmsgai/issues)
+- Report bugs: [GitHub Issues](https://github.com/btafoya/gitmsgollama/issues)
 - Security vulnerabilities: See [SECURITY.md](SECURITY.md)
-- Feature requests: [GitHub Issues](https://github.com/btafoya/gitmsgai/issues)
+- Feature requests: [GitHub Issues](https://github.com/btafoya/gitmsgollama/issues)
