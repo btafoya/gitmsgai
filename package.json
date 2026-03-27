@@ -2,7 +2,7 @@
   "name": "gitmsgollama",
   "displayName": "GitMsgOllama",
   "description": "AI-powered commit messages with free local AI support, smart caching, and enterprise security. The only commit tool you need.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "BrianTafoya",
   "author": {
     "name": "BrianTafoya"
@@ -93,7 +93,9 @@
         "properties": {
           "gitmsgollama.provider": {
             "type": "string",
-            "enum": ["local"],
+            "enum": [
+              "local"
+            ],
             "default": "local",
             "order": 0,
             "markdownDescription": "**AI provider to use for generating commit messages**",
@@ -139,7 +141,15 @@
           },
           "gitmsgollama.conventionalCommits.types": {
             "type": "array",
-            "default": ["feat", "fix", "docs", "style", "refactor", "test", "chore"],
+            "default": [
+              "feat",
+              "fix",
+              "docs",
+              "style",
+              "refactor",
+              "test",
+              "chore"
+            ],
             "items": {
               "type": "string"
             },
@@ -287,13 +297,13 @@
     "@types/mocha": "^10.0.6",
     "@types/node": "20.x",
     "@types/vscode": "^1.85.0",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
+    "@typescript-eslint/eslint-plugin": "^8.57.2",
+    "@typescript-eslint/parser": "^8.57.2",
     "@vscode/test-electron": "^2.3.8",
     "eslint": "^8.56.0",
     "glob": "^10.3.10",
     "minimatch": "^10.0.3",
-    "mocha": "^10.2.0",
+    "mocha": "^11.7.5",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack": "^5.89.0",

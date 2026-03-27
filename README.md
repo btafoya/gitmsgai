@@ -1,12 +1,12 @@
 # GitMsgOllama
 
-> **[Install from VS Code Marketplace →](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)**
+> **[Install from VS Code Marketplace →](https://marketplace.visualstudio.com/items?itemName=BrianTafoya.gitmsgollama)**
 
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/btafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)
-[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/btafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)
-[![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/btafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)
-[![GitHub License](https://img.shields.io/github/license/ChaseRichGit/gitmsgollama?style=for-the-badge&logo=github&logoColor=white&color=green)](https://github.com/btafoya/gitmsgollama/blob/main/LICENSE)
-[![GitHub Issues](https://img.shields.io/github/issues/ChaseRichGit/gitmsgollama?style=for-the-badge&logo=github&logoColor=white&color=orange)](https://github.com/btafoya/gitmsgollama/issues)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/BrianTafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=BrianTafoya.gitmsgollama)
+[![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/BrianTafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=BrianTafoya.gitmsgollama)
+[![Visual Studio Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/BrianTafoya.gitmsgollama?style=for-the-badge&logo=visual-studio-code&logoColor=white&color=0078d7)](https://marketplace.visualstudio.com/items?itemName=BrianTafoya.gitmsgollama)
+[![GitHub License](https://img.shields.io/github/license/btafoya/gitmsgollama?style=for-the-badge&logo=github&logoColor=white&color=green)](https://github.com/btafoya/gitmsgollama/blob/main/LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/btafoya/gitmsgollama?style=for-the-badge&logo=github&logoColor=white&color=orange)](https://github.com/btafoya/gitmsgollama/issues)
 
 ---
 
@@ -34,7 +34,7 @@ AI-powered commit message generator for VS Code. Get perfect commits in seconds 
 
 1. Install [Ollama](https://ollama.ai/) (takes 1-2 minutes)
 2. Run: `ollama pull qwen2.5-coder`
-3. **[Install extension](https://marketplace.visualstudio.com/items?itemName=btafoya.gitmsgollama)**
+3. **[Install extension](https://marketplace.visualstudio.com/items?itemName=BrianTafoya.gitmsgollama)**
 4. Click the robot icon in your Git panel
 5. Select "Local" provider
 6. Done! **No API key, no credit card, no tracking.**
@@ -294,4 +294,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-This project is a fork of [GitMsgAI](https://github.com/ChaseRichGit/gitmsgai) by [Chase Rich](https://github.com/ChaseRichGit). The original project provided the foundation for this privacy-focused Ollama-only version.
+This project is a fork of [GitMsgAI](https://github.com/btafoya/gitmsgai) by [Chase Rich](https://github.com/btafoya). The original project provided the foundation for this privacy-focused Ollama-only version.

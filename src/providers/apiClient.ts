@@ -32,31 +32,9 @@ export function buildRequestHeaders(config: ProviderConfig): Record<string, stri
         'Content-Type': 'application/json'
     };
 
-    // Add API key if available
+    // Add API key if available (for local providers that may use auth)
     if (config.apiKey) {
-        switch (config.provider) {
-            case AIProvider.OpenRouter:
-            case AIProvider.OpenAI:
-            case AIProvider.Local:
-                headers['Authorization'] = `Bearer ${config.apiKey}`;
-                break;
-
-            case AIProvider.Google:
-                // Google uses API key in query params, but we'll add it as header for OpenAI compatibility
-                headers['Authorization'] = `Bearer ${config.apiKey}`;
-                break;
-
-            case AIProvider.Claude:
-                headers['x-api-key'] = config.apiKey;
-                headers['anthropic-version'] = '2023-06-01';
-                break;
-        }
-    }
-
-    // Add provider-specific headers
-    if (config.provider === AIProvider.OpenRouter) {
-        headers['HTTP-Referer'] = 'https://github.com/btafoya/gitmsgollama';
-        headers['X-Title'] = 'GitMsgOllama VSCode Extension';
+        headers['Authorization'] = `Bearer ${config.apiKey}`;
     }
 
     // Add custom headers if provided
@@ -75,21 +53,7 @@ export function buildRequestHeaders(config: ProviderConfig): Record<string, stri
  * @returns Request body object
  */
 export function buildRequestBody(provider: AIProvider, model: string, prompt: string): any {
-    // Claude has a different request format
-    if (provider === AIProvider.Claude) {
-        return {
-            model: model,
-            messages: [
-                {
-                    role: 'user',
-                    content: prompt
-                }
-            ],
-            max_tokens: 4096 // Required for Claude API
-        };
-    }
-
-    // OpenAI-compatible format for other providers
+    // OpenAI-compatible format for local providers
     return {
         model: model,
         messages: [

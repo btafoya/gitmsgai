@@ -10,35 +10,16 @@ import { makeApiRequest } from '../providers/apiClient';
 
 /**
  * Command to select AI provider via QuickPick
+ * Note: Now only supports local provider (Ollama/LM Studio)
  */
 export async function selectProviderCommand(context: vscode.ExtensionContext): Promise<void> {
     try {
-        // Create QuickPick items for all providers
+        // Create QuickPick items - now only local
         const providerItems: vscode.QuickPickItem[] = [
             {
-                label: 'OpenRouter',
-                description: 'Access 400+ models from multiple providers',
-                detail: 'Unified API for OpenAI, Anthropic, Google, and more. Free and paid models available.'
-            },
-            {
-                label: 'OpenAI',
-                description: 'Official OpenAI API',
-                detail: 'GPT-4, GPT-4 Turbo, GPT-3.5 Turbo. Requires OpenAI API key.'
-            },
-            {
-                label: 'Google',
-                description: 'Google AI Studio',
-                detail: 'Gemini 2.0 Flash, Gemini 1.5 Pro/Flash. Requires Google AI API key.'
-            },
-            {
-                label: 'Claude',
-                description: 'Anthropic Claude API',
-                detail: 'Claude 3.5 Sonnet, Claude 3 Opus/Haiku. Requires Anthropic API key.'
-            },
-            {
                 label: 'Local',
-                description: 'Local AI models',
-                detail: 'Ollama, LM Studio, or other local servers. No API key required.'
+                description: 'Local AI models (Ollama/LM Studio)',
+                detail: 'Run AI models locally on your machine. No API key required.'
             }
         ];
 
@@ -52,43 +33,11 @@ export async function selectProviderCommand(context: vscode.ExtensionContext): P
             return; // User cancelled
         }
 
-        // Map label to provider enum
-        const providerMap: Record<string, AIProvider> = {
-            'OpenRouter': AIProvider.OpenRouter,
-            'OpenAI': AIProvider.OpenAI,
-            'Google': AIProvider.Google,
-            'Claude': AIProvider.Claude,
-            'Local': AIProvider.Local
-        };
-
-        const provider = providerMap[selected.label];
-        if (!provider) {
-            vscode.window.showErrorMessage('Invalid provider selected');
-            return;
-        }
-
         // Update settings with selected provider
         const config = vscode.workspace.getConfiguration('gitmsgollama');
-        await config.update('provider', provider, vscode.ConfigurationTarget.Global);
+        await config.update('provider', AIProvider.Local, vscode.ConfigurationTarget.Global);
 
         vscode.window.showInformationMessage(`AI provider set to ${selected.label}`);
-
-        // Check if API key is needed
-        const endpoint = PROVIDER_ENDPOINTS[provider];
-        if (endpoint.requiresApiKey) {
-            const apiKey = await getProviderApiKey(context, provider);
-            if (!apiKey) {
-                const action = await vscode.window.showInformationMessage(
-                    `${selected.label} requires an API key. Would you like to set it now?`,
-                    'Set API Key',
-                    'Later'
-                );
-
-                if (action === 'Set API Key') {
-                    await setApiKeyCommand(context);
-                }
-            }
-        }
     } catch (error: any) {
         vscode.window.showErrorMessage(`Failed to select provider: ${error.message}`);
     }
@@ -96,12 +45,13 @@ export async function selectProviderCommand(context: vscode.ExtensionContext): P
 
 /**
  * Command to set API key for current provider
+ * Note: Local provider doesn't require API key
  */
 export async function setApiKeyCommand(context: vscode.ExtensionContext): Promise<void> {
     try {
         // Get current provider from settings
         const config = vscode.workspace.getConfiguration('gitmsgollama');
-        const providerString = config.get<string>('provider', 'openrouter');
+        const providerString = config.get<string>('provider', 'local');
         const provider = providerString as AIProvider;
 
         // Check if provider requires API key
@@ -113,96 +63,7 @@ export async function setApiKeyCommand(context: vscode.ExtensionContext): Promis
             return;
         }
 
-        // Provider-specific instructions and URLs
-        const providerInfo: Record<AIProvider, { name: string; url: string; pricingUrl?: string; instructions: string; placeholder: string }> = {
-            [AIProvider.OpenRouter]: {
-                name: 'OpenRouter',
-                url: 'https://openrouter.ai/keys',
-                pricingUrl: 'https://openrouter.ai/models',
-                instructions: 'Get your API key from OpenRouter. Visit the URL below and create a new API key.',
-                placeholder: 'sk-or-v1-...'
-            },
-            [AIProvider.OpenAI]: {
-                name: 'OpenAI',
-                url: 'https://platform.openai.com/api-keys',
-                pricingUrl: 'https://openai.com/api/pricing/',
-                instructions: 'Get your API key from OpenAI Platform. Visit the URL below and create a new API key.',
-                placeholder: 'sk-...'
-            },
-            [AIProvider.Google]: {
-                name: 'Google AI',
-                url: 'https://makersuite.google.com/app/apikey',
-                pricingUrl: 'https://ai.google.dev/pricing',
-                instructions: 'Get your API key from Google AI Studio. Visit the URL below and create a new API key.',
-                placeholder: 'AI...'
-            },
-            [AIProvider.Claude]: {
-                name: 'Anthropic Claude',
-                url: 'https://console.anthropic.com/settings/keys',
-                pricingUrl: 'https://www.anthropic.com/pricing#anthropic-api',
-                instructions: 'Get your API key from Anthropic Console. Visit the URL below and create a new API key.',
-                placeholder: 'sk-ant-...'
-            },
-            [AIProvider.Local]: {
-                name: 'Local',
-                url: '',
-                instructions: '',
-                placeholder: ''
-            }
-        };
-
-        const info = providerInfo[provider];
-
-        // Show instructions with option to open URL
-        const buttons: string[] = ['Open API Keys', 'Continue'];
-        if (info.pricingUrl) {
-            buttons.splice(1, 0, 'View Pricing');
-        }
-
-        const action = await vscode.window.showInformationMessage(
-            info.instructions,
-            ...buttons
-        );
-
-        if (action === 'Open API Keys') {
-            vscode.env.openExternal(vscode.Uri.parse(info.url));
-        } else if (action === 'View Pricing' && info.pricingUrl) {
-            vscode.env.openExternal(vscode.Uri.parse(info.pricingUrl));
-        } else if (action !== 'Continue') {
-            return; // User cancelled
-        }
-
-        // Show input box with password masking
-        const apiKey = await vscode.window.showInputBox({
-            prompt: `Enter your ${info.name} API Key`,
-            password: true,
-            ignoreFocusOut: true,
-            placeHolder: info.placeholder,
-            validateInput: (value) => {
-                if (!value || value.trim() === '') {
-                    return 'API key cannot be empty';
-                }
-
-                // Basic validation for known prefixes
-                if (provider === AIProvider.OpenRouter && !value.startsWith('sk-or-')) {
-                    return 'OpenRouter API keys typically start with "sk-or-"';
-                } else if (provider === AIProvider.OpenAI && !value.startsWith('sk-')) {
-                    return 'OpenAI API keys typically start with "sk-"';
-                } else if (provider === AIProvider.Claude && !value.startsWith('sk-ant-')) {
-                    return 'Claude API keys typically start with "sk-ant-"';
-                }
-
-                return null;
-            }
-        });
-
-        if (!apiKey) {
-            return; // User cancelled
-        }
-
-        // Save API key using setProviderApiKey
-        await setProviderApiKey(context, provider, apiKey);
-        vscode.window.showInformationMessage(`${info.name} API key has been saved securely.`);
+        vscode.window.showInformationMessage('API key setup is only needed for cloud providers.');
 
     } catch (error: any) {
         vscode.window.showErrorMessage(`Failed to set API key: ${error.message}`);
@@ -216,7 +77,7 @@ export async function testConnectionCommand(context: vscode.ExtensionContext): P
     try {
         // Get current provider from settings
         const config = vscode.workspace.getConfiguration('gitmsgollama');
-        const providerString = config.get<string>('provider', 'openrouter');
+        const providerString = config.get<string>('provider', 'local');
         const provider = providerString as AIProvider;
 
         // Validate provider config
