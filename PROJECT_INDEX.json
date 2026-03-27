@@ -1,0 +1,106 @@
+{
+  "project": {
+    "name": "GitMsgAI",
+    "version": "0.0.6",
+    "description": "AI-powered commit message generator for VS Code with 5 providers and 400+ models",
+    "type": "vscode-extension",
+    "language": "typescript",
+    "license": "MIT"
+  },
+  "structure": {
+    "sourceDir": "src",
+    "testDir": "out/test",
+    "configFiles": ["package.json", "tsconfig.json", "webpack.config.js"]
+  },
+  "entryPoints": {
+    "main": "src/extension.ts",
+    "build": "npm run compile",
+    "package": "npm run package",
+    "test": "npm run test"
+  },
+  "modules": [
+    {
+      "name": "extension",
+      "path": "src/extension.ts",
+      "purpose": "Main extension entry point",
+      "keyFunctions": ["activate", "generateWithReview", "reviewAndApply"]
+    },
+    {
+      "name": "cache",
+      "path": "src/cache.ts",
+      "purpose": "Commit message caching",
+      "class": "CommitMessageCache"
+    },
+    {
+      "name": "conventionalCommits",
+      "path": "src/conventionalCommits.ts",
+      "purpose": "Conventional commits format support"
+    },
+    {
+      "name": "diffFilter",
+      "path": "src/diffFilter.ts",
+      "purpose": "Sensitive file filtering from diffs"
+    },
+    {
+      "name": "apiClient",
+      "path": "src/providers/apiClient.ts",
+      "purpose": "Multi-provider API requests"
+    },
+    {
+      "name": "modelPicker",
+      "path": "src/modelPicker.ts",
+      "purpose": "Interactive model selection"
+    },
+    {
+      "name": "security",
+      "path": "src/utils/security.ts",
+      "purpose": "Input validation and sanitization"
+    },
+    {
+      "name": "rateLimiter",
+      "path": "src/rateLimiter.ts",
+      "purpose": "API rate limiting"
+    },
+    {
+      "name": "secretManager",
+      "path": "src/secretManager.ts",
+      "purpose": "Secure API key storage"
+    },
+    {
+      "name": "providerManager",
+      "path": "src/providers/providerManager.ts",
+      "purpose": "Multi-provider configuration"
+    }
+  ],
+  "commands": [
+    "gitmsgai.generateCommitMessage",
+    "gitmsgai.selectProvider",
+    "gitmsgai.setApiKey",
+    "gitmsgai.selectModel",
+    "gitmsgai.testConnection",
+    "gitmsgai.clearCache"
+  ],
+  "providers": ["openrouter", "openai", "google", "claude", "local"],
+  "dependencies": {
+    "axios": "^1.6.2",
+    "minimatch": "^10.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "@vscode/test-electron": "^2.3.8"
+  },
+  "documentation": {
+    "readme": "README.md",
+    "providers": "docs/PROVIDERS.md",
+    "security": "SECURITY.md",
+    "changelog": "CHANGELOG.md"
+  },
+  "settings": {
+    "gitmsgai.provider": "openrouter",
+    "gitmsgai.timeout": 30,
+    "gitmsgai.rateLimitPerMinute": 10,
+    "gitmsgai.enableCache": false,
+    "gitmsgai.reviewBeforeApply": false
+  }
+}

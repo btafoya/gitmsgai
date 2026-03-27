@@ -40,7 +40,7 @@ const outputChannel = vscode.window.createOutputChannel('GitMsgAI');
 
 export function activate(context: vscode.ExtensionContext) {
     const cache = new CommitMessageCache(context);
-    const version = vscode.extensions.getExtension('chaserich.gitmsgai')?.packageJSON.version || 'unknown';
+    const version = vscode.extensions.getExtension('btafoya.gitmsgai')?.packageJSON.version || 'unknown';
     const now = new Date().toISOString();
     outputChannel.appendLine(`GitMsgAI extension activated - v${version} - ${now}`);
 
@@ -72,7 +72,7 @@ export function activate(context: vscode.ExtensionContext) {
             );
 
             if (action === 'What\'s New') {
-                vscode.env.openExternal(vscode.Uri.parse('https://github.com/ChaseRichGit/gitmsgai/blob/main/CHANGELOG.md'));
+                vscode.env.openExternal(vscode.Uri.parse('https://github.com/btafoya/gitmsgai/blob/main/CHANGELOG.md'));
             }
         }
         // First time activation
@@ -90,7 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
             );
 
             if (action === 'Open Settings') {
-                vscode.commands.executeCommand('workbench.action.openSettings', '@ext:chaserich.gitmsgai');
+                vscode.commands.executeCommand('workbench.action.openSettings', '@ext:btafoya.gitmsgai');
             } else if (action === 'Set API Key') {
                 vscode.commands.executeCommand('gitmsgai.setApiKey');
             } else if (action === 'Select Model') {
@@ -396,6 +396,7 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
             // If API key not found in SecretStorage, prompt user to set it (SEC-01, SEC-02, SEC-03)
+            /*
             if (!apiKey) {
                 const action = await vscode.window.showErrorMessage(
                     'OpenRouter API key is not set. Please configure your API key to use GitMsgAI.',
@@ -415,6 +416,7 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showErrorMessage(apiKeyValidation.message || 'Invalid API key');
                 return;
             }
+            */
 
             // Validate model (SEC-04)
             const modelValidation = validateModel(model, currentProvider);

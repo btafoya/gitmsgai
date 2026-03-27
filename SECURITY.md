@@ -378,7 +378,7 @@ If using in a corporate environment:
 If you have questions about security that aren't covered here:
 
 1. Check the [README.md](README.md) for general documentation
-2. Search [existing issues](https://github.com/ChaseRichGit/gitmsgai/issues)
+2. Search [existing issues](https://github.com/btafoya/gitmsgai/issues)
 3. Create a new issue for non-security-sensitive questions
 4. For security concerns, use the vulnerability reporting process above
 

@@ -9,13 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ChaseRichGit/gitmsgai"
+    "url": "https://github.com/btafoya/gitmsgai"
   },
   "bugs": {
-    "url": "https://github.com/ChaseRichGit/gitmsgai/issues"
+    "url": "https://github.com/btafoya/gitmsgai/issues"
   },
   "homepage": "https://chaserich.com",
-  "qna": "https://github.com/ChaseRichGit/gitmsgai/discussions",
+  "qna": "https://github.com/btafoya/gitmsgai/discussions",
   "license": "MIT",
   "icon": "images/icon.png",
   "galleryBanner": {

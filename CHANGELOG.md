@@ -177,6 +177,6 @@ The following versions were released under the original name "AI Commit Message 
 - Missing validation for API responses
 - Control characters in commit messages
 
-[0.0.6]: https://github.com/ChaseRichGit/gitmsgai/compare/v0.0.5...v0.0.6
-[0.0.5]: https://github.com/ChaseRichGit/gitmsgai/compare/v0.0.1...v0.0.5
-[0.0.1]: https://github.com/ChaseRichGit/gitmsgai/releases/tag/v0.0.1
+[0.0.6]: https://github.com/btafoya/gitmsgai/compare/v0.0.5...v0.0.6
+[0.0.5]: https://github.com/btafoya/gitmsgai/compare/v0.0.1...v0.0.5
+[0.0.1]: https://github.com/btafoya/gitmsgai/releases/tag/v0.0.1
