@@ -10,10 +10,6 @@
 
 ---
 
-![GitMsgOllama](https://raw.githubusercontent.com/btafoya/gitmsgollama/main/images/marketplace/GitMsgOllama.gif)
-
----
-
 AI-powered commit message generator for VS Code. Get perfect commits in seconds using local AI with Ollama.
 
 ## Why GitMsgOllama?
